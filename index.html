@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlexEase Physio Studio | Physiotherapy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables & Base Styles --- */
+        :root {
+            --primary-blue: #4361ee;
+            --dark-blue: #3a0ca3;
+            --light-blue: #4cc9f0;
+            --accent: #7209b7;
+            --white: #ffffff;
+            --text-dark: #1a1a1a;
+            --text-light: #555;
+            --bg-light: #f8faff;
+            --page-bg: #f0f7ff;
+            --border-color: #e0e7ff;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --shadow-sm: 0 4px 20px rgba(67, 97, 238, 0.08);
+            --shadow-md: 0 8px 30px rgba(67, 97, 238, 0.12);
+            --shadow-lg: 0 12px 40px rgba(67, 97, 238, 0.16);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--page-bg) 0%, #e6f2ff 50%, var(--bg-light) 100%);
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Global Elements & Typography --- */
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 7rem 0;
+            position: relative;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            color: var(--dark-blue);
+            font-weight: 800;
+        }
+
+        h2 {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            text-align: center;
+            margin-bottom: 3.5rem;
+            color: var(--dark-blue);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-blue);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--light-blue);
+        }
+
+        /* --- Minimal Motion + Reveal (modern, subtle) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 600ms ease, transform 600ms ease;
+            will-change: opacity, transform;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Accessible focus styles */
+        a:focus-visible, button:focus-visible, .btn:focus-visible, .consult-btn:focus-visible, .btn-whatsapp:focus-visible, .footer-whatsapp:focus-visible {
+            outline: 3px solid rgba(81, 112, 255, 0.35);
+            outline-offset: 2px;
+            border-radius: 8px;
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .main-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-image {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .logo .studio {
+            font-weight: 500;
+            font-size: 1.2rem;
+            color: var(--primary-blue);
+        }
+
+        .main-nav {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .main-nav a {
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text-dark);
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .main-nav a:not(.btn-whatsapp)::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--light-blue));
+            transition: width 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .main-nav a:not(.btn-whatsapp):hover::after, .main-nav a.active::after {
+            width: 100%;
+        }
+
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: var(--white) !important;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+            text-decoration: none;
+            min-width: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-whatsapp::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+        }
+        
+        .btn-whatsapp:hover::before {
+            opacity: 1;
+        }
+
+        .btn-whatsapp svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding-top: 176px; /* Increased by 96px (1 inch) */
+            background: radial-gradient(ellipse at bottom right, rgba(76, 201, 240, 0.15) 0%, transparent 70%),
+                        radial-gradient(ellipse at top left, rgba(67, 97, 238, 0.15) 0%, transparent 70%),
+                        linear-gradient(135deg, var(--bg-light) 0%, #e6f2ff 50%, var(--bg-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(67, 97, 238, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(76, 201, 240, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(114, 9, 183, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+            padding: 0 2rem;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-blue), var(--light-blue));
+            opacity: 0.12;
+            animation: float 15s ease-in-out infinite;
+            box-shadow: 0 8px 30px rgba(67, 97, 238, 0.15);
+        }
+
+    .floating-element:nth-child(1) { 
+        width: 80px; 
+        height: 80px; 
+        top: 15%; 
+        left: 10%; 
+        animation-delay: 0s; 
+        background: linear-gradient(45deg, var(--primary-blue), var(--accent));
+    }
+    .floating-element:nth-child(2) { 
+        width: 40px; 
+        height: 40px; 
+        top: 65%; 
+        left: 85%; 
+        animation-delay: 2s; 
+        background: linear-gradient(45deg, var(--light-blue), var(--primary-blue));
+    }
+    .floating-element:nth-child(3) { 
+        width: 120px; 
+        height: 120px; 
+        top: 75%; 
+        left: 15%; 
+        animation-delay: 4s; 
+        background: linear-gradient(45deg, var(--accent), var(--primary-blue));
+        opacity: 0.07;
+    }
+    .floating-element:nth-child(4) { 
+        width: 60px; 
+        height: 60px; 
+        top: 25%; 
+        left: 82%; 
+        animation-delay: 1s; 
+        background: linear-gradient(45deg, var(--light-blue), var(--accent));
+    }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+            text-align: center;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            animation: fadeInUp 1s ease-out 0.3s both;
+            text-align: center;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.4s both;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent));
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.25);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--light-blue), var(--primary-blue));
+            z-index: -1;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .btn-primary:hover {
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.35);
+        }
+        
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        /* --- Global Interactive Elements --- */
+        * {
+            cursor: default;
+        }
+
+        a, button, .btn, .btn-whatsapp, .footer-whatsapp, .service-card, .therapist-image {
+            cursor: pointer;
+        }
+        
+        /* Enhanced focus states for accessibility */
+        a:focus-visible, button:focus-visible, .btn:focus-visible, 
+        .consult-btn:focus-visible, .btn-whatsapp:focus-visible, .footer-whatsapp:focus-visible {
+            outline: 3px solid rgba(67, 97, 238, 0.35);
+            outline-offset: 3px;
+            border-radius: 8px;
+        }
+        
+        /* Animations - with reduced motion preference support */
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 700ms ease, transform 700ms ease;
+                will-change: opacity, transform;
+            }
+            
+            .reveal.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { 
+                animation: none !important; 
+                transition: none !important; 
+            }
+            .reveal { 
+                opacity: 1 !important; 
+                transform: none !important; 
+            }
+        }
+
+        /* --- Services Section --- */
+        #services {
+            background: radial-gradient(ellipse at top right, rgba(76, 201, 240, 0.1) 0%, transparent 60%),
+                        radial-gradient(ellipse at bottom left, rgba(114, 9, 183, 0.05) 0%, transparent 60%),
+                        linear-gradient(135deg, var(--bg-light) 0%, #e6f2ff 50%, var(--bg-light) 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 7rem 0;
+        }
+
+        #services::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.04) 0%, transparent 60%);
+            pointer-events: none;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        #services::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(76, 201, 240, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+
+        #services h2 {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+            text-align: center;
+        }
+
+        .services-intro {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 5rem auto;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            text-align: center;
+            padding: 2.8rem 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(76, 201, 240, 0.1));
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .service-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(224deg) brightness(102%) contrast(97%);
+            transition: all 0.4s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.15), rgba(76, 201, 240, 0.15));
+        }
+        
+        .service-card:hover .service-icon img {
+            filter: brightness(0) saturate(100%) invert(15%) sepia(88%) saturate(1684%) hue-rotate(224deg) brightness(102%) contrast(107%);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* --- Therapists Section --- */
+        #therapists {
+            padding: 7rem 0 5rem 0;
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #therapists::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(76, 201, 240, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        #therapists h2 {
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            color: var(--dark-blue);
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .therapist-intro {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 4rem auto;
+            font-size: 1.15rem;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .therapist-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 850px;
+            margin: 0 auto;
+            gap: 3.5rem;
+        }
+
+        .therapist-image-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .therapist-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--white);
+            box-shadow: 0 0 0 4px var(--light-blue), 0 10px 30px rgba(67, 97, 238, 0.12);
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .therapist-image:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 0 4px var(--primary-blue), 0 15px 35px rgba(67, 97, 238, 0.18);
+        }
+
+        .therapist-info {
+            text-align: center;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .therapist-info h3 {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .therapist-title {
+            font-weight: 500;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .therapist-description {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .consult-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent));
+            color: white;
+            padding: 0.9rem 2.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .consult-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--light-blue), var(--primary-blue));
+            z-index: -1;
+            transition: opacity 0.5s ease;
+            opacity: 0;
+        }
+
+        .consult-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.3);
+            color: white;
+        }
+        
+        .consult-btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn-icon {
+            font-size: 1rem;
+        }
+
+        /* Responsive for therapist section */
+        @media (max-width: 768px) {
+            .therapist-container {
+                gap: 2rem;
+                padding: 0 2rem;
+            }
+            
+            #therapists h2 {
+                font-size: 2.5rem;
+            }
+            
+            .therapist-image {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .therapist-info h3 {
+                font-size: 2rem;
+            }
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            background: linear-gradient(135deg, #2b2d42 0%, #1a1b2e 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 4rem 0 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(76, 201, 240, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .footer-logo img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+            filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .footer-logo .studio {
+            font-weight: 500;
+            font-size: 1.4rem;
+            color: var(--light-blue);
+            text-shadow: 0 2px 8px rgba(76, 201, 240, 0.3);
+        }
+
+        .footer-info {
+            margin: 1.5rem 0;
+            font-size: 1rem;
+        }
+        
+        .footer-info p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .footer-contact {
+            margin: 2rem 0;
+        }
+
+        .footer-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: var(--white);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(18, 140, 126, 0.25);
+        }
+        
+        .footer-whatsapp::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .footer-whatsapp:hover {
+            background-color: #128C7E;
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(18, 140, 126, 0.35);
+        }
+        
+        .footer-whatsapp:hover::before {
+            opacity: 1;
+        }
+
+        .footer-whatsapp svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .footer-copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 1.8rem;
+            margin-top: 2rem;
+        }
+
+        .footer-copyright p {
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+            font-size: 0.9rem;
+            letter-spacing: 0.02em;
+        }
+
+        /* --- Media Queries --- */
+        @media (max-width: 768px) {
+            .container {
+                width: 92%;
+                padding: 0 1rem;
+            }
+            
+            section {
+                padding: 5rem 0;
+            }
+            
+            h1 {
+                font-size: clamp(2.2rem, 5vw, 3.5rem);
+            }
+            
+            h2 {
+                font-size: clamp(1.8rem, 3vw, 2.5rem);
+                margin-bottom: 2.5rem;
+            }
+            
+            .main-header .container {
+                height: 70px;
+            }
+            
+            .hero {
+                min-height: 90vh;
+            }
+            
+            .service-grid {
+                gap: 1.5rem;
+            }
+            
+            .therapist-container {
+                padding: 2rem;
+                gap: 2.5rem;
+            }
+            
+            .therapist-image {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .therapist-image-section::before {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .therapist-info h3 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="./images/flexease logo 1.png" alt="FlexEase Logo" class="logo-image">
+                FLEXEASE <span class="studio">PHYSIO STUDIO</span>
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#therapists">Our Therapists</a></li>
+                </ul>
+                <a href="https://wa.me/94762452400" target="_blank" class="btn-whatsapp">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.6 18.7L50 312.5l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                    <span>Contact</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ========== Hero Section ========== -->
+        <section class="hero" id="hero">
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+            <div class="hero-content">
+                <div style="height: 96px;"></div><!-- 1 inch spacer -->
+                <h1>FlexEase Physio Studio</h1>
+                <p class="hero-subtitle">Professional Physiotherapy & Rehabilitation Services</p>
+                <p class="hero-description">Expert care for arthritis, sports injuries, neurological conditions, and comprehensive rehabilitation</p>
+                <a href="https://wa.me/94762452400" target="_blank" class="btn btn-primary">Book Consultation</a>
+            </div>
+        </section>
+
+        <!-- ========== Services Section ========== -->
+        <section id="services">
+            <div class="container">
+                <h2>Our Specialized Services</h2>
+                <p class="services-intro">
+                    Comprehensive physiotherapy treatments tailored to your specific needs, delivered with expertise and compassion.
+                </p>
+                <div class="service-grid">
+                    
+                    <!-- Service 1 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <img src="icons/1.png" alt="Arthritis & Joint Conditions">
+                        </div>
+                        <h3>Arthritis & Joint Conditions</h3>
+                        <p>Comprehensive treatment for arthritis, rheumatoid arthritis, and all joint related problems to improve mobility and reduce pain.</p>
+                    </div>
+                    
+                    <!-- Service 2 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <img src="icons/spinal-cord.png" alt="Back & Spinal Care">
+                        </div>
+                        <h3>Back & Spinal Care</h3>
+                        <p>Specialized care for back pain, slip disc, spinal cord injuries, and neck pain using advanced physiotherapy techniques.</p>
+                    </div>
+                    
+                    <!-- Service 3 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <img src="icons/neurology.png" alt="Neurological Conditions">
+                        </div>
+                        <h3>Neurological Conditions</h3>
+                        <p>Expert treatment for stroke/paralysis, Parkinson's disease, Guillain Barre syndrome, and other neurological conditions.</p>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <img src="icons/yoga.png" alt="Sports & Trauma Injuries">
+                        </div>
+                        <h3>Sports & Trauma Injuries</h3>
+                        <p>Professional rehabilitation for sports injuries, fractures, sprains, and trauma-related conditions.</p>
+                    </div>
+
+                    <!-- Service 5 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <img src="icons/feet.png" alt="Pain & Numbness Management">
+                        </div>
+                        <h3>Pain & Numbness Management</h3>
+                        <p>Treatment for numbness in hands and feet, heel pain, leg numbness, and chronic pain conditions.</p>
+                    </div>
+
+                    <!-- Service 6 -->
+                    <div class="service-card reveal">
+                        <div class="service-icon">
+                            <img src="icons/pediatrics.png" alt="Pediatric Physiotherapy">
+                        </div>
+                        <h3>Pediatric Physiotherapy</h3>
+                        <p>Specialized care for pediatric conditions, helping children develop proper movement and motor skills.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== Therapists Section ========== -->
+        <section id="therapists">
+            <div class="container">
+                <h2>Meet The Expert</h2>
+                <p class="therapist-intro">
+                    Dedicated to providing exceptional care with years of experience and specialized training in comprehensive physiotherapy and rehabilitation.
+                </p>
+                
+                <div class="therapist-container reveal">
+                    <div class="therapist-image-section">
+                        <img src="images/Screenshot 2025-08-18 185519.png" alt="Photo of Ms. Sandali Malsri" class="therapist-image">
+                    </div>
+                    
+                    <div class="therapist-info">
+                        <h3>Ms. Sandali Malsri</h3>
+                        <div class="therapist-title">Lead Physiotherapist</div>
+                        <p class="therapist-description">
+                            BSc (Hons) Physiotherapy - KDU | Physiotherapist at Asiri Surgical Hospital<br>
+                            Specializing in Sports Injuries, Pain Management, and Neurological Rehabilitation<br>
+                            SLMC Registration No: 1235
+                        </p>
+                        <a href="https://wa.me/94762452400" target="_blank" class="consult-btn">
+                            <span class="btn-icon">📞</span>
+                            Book Consultation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="images/flexease logo 1.png" alt="FlexEase Logo">
+                FLEXEASE <span class="studio">PHYSIO STUDIO</span>
+            </div>
+            
+            <div class="footer-info">
+                <p>Your trusted physical healthcare and wellbeing partner</p>
+                <p>Professional physiotherapy services for comprehensive rehabilitation</p>
+            </div>
+
+            <div class="footer-contact">
+                <a href="https://wa.me/94762452400" target="_blank" class="footer-whatsapp">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.2-27.2l-6.7-4-71.6 18.7L50 312.5l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                    <span>Contact Us on WhatsApp</span>
+                </a>
+            </div>
+
+            <div class="footer-copyright">
+                <p>&copy; 2025 FlexEase Physio Studio. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Minimal scroll-reveal activation with improved performance
+    (function(){
+        // Only run if IntersectionObserver is supported
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.reveal').forEach(function(el){ 
+                el.classList.add('visible'); 
+            });
+            return;
+        }
+        
+        // Get all elements to reveal
+        var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+        
+        // Skip if no elements found
+        if (els.length === 0) return;
+        
+        // Create the observer
+        var io = new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+                if (entry.isIntersecting) {
+                    // Add visible class when element enters viewport
+                    entry.target.classList.add('visible');
+                    // Stop observing the element once it's visible
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { 
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        
+        // Start observing each element
+        els.forEach(function(el){ 
+            io.observe(el); 
+        });
+    })();
+    </script>
+
+</body>
+</html>
