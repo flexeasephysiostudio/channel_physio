@@ -941,10 +941,49 @@
         }
 
         /* --- Media Queries --- */
+        @media (max-width: 992px) {
+            .main-nav ul {
+                gap: 1.5rem;
+            }
+            
+            .btn-whatsapp {
+                padding: 0.6rem 1.2rem;
+                min-width: 110px;
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                font-size: 1.4rem;
+            }
+        }
+        
         @media (max-width: 768px) {
             .container {
                 width: 92%;
                 padding: 0 1rem;
+            }
+            
+            /* Hide navigation on mobile */
+            .main-nav {
+                display: none;
+            }
+            
+            /* Center logo and hide PHYSIO STUDIO text */
+            .main-header .container {
+                height: 70px;
+                justify-content: center;
+            }
+            
+            .logo .studio {
+                display: none;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .logo-image {
+                height: 45px;
             }
             
             section {
@@ -1197,3 +1236,4 @@
 
 </body>
 </html>
+
